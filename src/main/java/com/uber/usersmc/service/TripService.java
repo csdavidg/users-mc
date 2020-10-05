@@ -15,9 +15,9 @@ public class TripService implements TripInterface {
     private final TripDao tripDao;
 
     @Override
-    public Trip createTrip(Trip user) {
+    public Trip createTrip(Trip trip) {
         try {
-            return tripDao.save(user);
+            return tripDao.save(trip);
         } catch (DataIntegrityViolationException e) {
             throw new DataIntegrityViolationException("User doesn't exist");
         }

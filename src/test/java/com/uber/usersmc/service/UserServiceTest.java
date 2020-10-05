@@ -3,21 +3,22 @@ package com.uber.usersmc.service;
 import com.uber.usersmc.entity.User;
 import com.uber.usersmc.repository.UserDao;
 import org.hibernate.PropertyNotFoundException;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @Transactional
 @SpringBootTest
 public class UserServiceTest {
@@ -30,7 +31,7 @@ public class UserServiceTest {
     private User user;
 
 
-    @Before
+    @BeforeEach
     public void setUp() {
         user = User.builder()
                 .firstName("Cristian")
@@ -48,9 +49,9 @@ public class UserServiceTest {
         assertEquals(user, userResponse);
     }
 
-    @Test(expected = PropertyNotFoundException.class)
+    @Test
     public void testGettingUserNotFound() {
-        userService.getUserById(2L);
+        assertThrows(PropertyNotFoundException.class, () -> userService.getUserById(2L));
     }
 
     @Test
